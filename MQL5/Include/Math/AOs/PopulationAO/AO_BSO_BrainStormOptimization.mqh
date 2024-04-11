@@ -14,18 +14,20 @@ struct S_BSO_Agent
     double c     []; //coordinates
     double f;        //fitness
     int    label;    //cluster membership label
+    double minDist;  //minimum distance to the nearest centroid
 
     void Init (int coords)
     {
       ArrayResize (c,     coords);
       f     = -DBL_MAX;
       label = -1;
+      minDist = DBL_MAX;
     }
 };
 //——————————————————————————————————————————————————————————————————————————————
-
+/*
 //——————————————————————————————————————————————————————————————————————————————
-struct S_Clusters
+struct S_Cluster
 {
     double centroid [];  //cluster centroid
     double f;            //centroid fitness
@@ -42,16 +44,60 @@ struct S_Clusters
 //——————————————————————————————————————————————————————————————————————————————
 
 //——————————————————————————————————————————————————————————————————————————————
-class S_BSO_KMeans
+class C_BSO_KMeans
 {
   public: //--------------------------------------------------------------------
 
-  void KMeansInit (S_BSO_Agent &data [], int dataSizeClust, S_Clusters &clust [])
+  void KMeansInit (S_BSO_Agent &data [], int dataSizeClust, S_Cluster &clust [])
   {
     for (int i = 0; i < ArraySize (clust); i++)
     {
       int ind = MathRand () % dataSizeClust;
       ArrayCopy (clust [i].centroid, data [ind].c, 0, 0, WHOLE_ARRAY);
+    }
+  }
+
+  void KMeansPlusPlusInit (S_BSO_Agent &data [], int dataSizeClust, S_Cluster &clust [])
+  {
+    // Choose the first centroid randomly
+    int ind = MathRand () % dataSizeClust;
+    ArrayCopy (clust [0].centroid, data [ind].c, 0, 0, WHOLE_ARRAY);
+
+    for (int i = 1; i < ArraySize (clust); i++)
+    {
+      double sum = 0;
+
+      // Compute the distance from each data point to the nearest centroid
+      for (int j = 0; j < dataSizeClust; j++)
+      {
+        double minDist = DBL_MAX;
+
+        for (int k = 0; k < i; k++)
+        {
+          double dist = VectorDistance (data [j].c, clust [k].centroid);
+
+          if (dist < minDist)
+          {
+            minDist = dist;
+          }
+        }
+
+        data [j].minDist = minDist;
+        sum += minDist;
+      }
+
+      // Choose the next centroid with a probability proportional to the distance
+      double r = MathRand () * sum;
+
+      for (int j = 0; j < dataSizeClust; j++)
+      {
+        if (r <= data [j].minDist)
+        {
+          ArrayCopy (clust [i].centroid, data [j].c, 0, 0, WHOLE_ARRAY);
+          break;
+        }
+        r -= data [j].minDist;
+      }
     }
   }
 
@@ -65,7 +111,7 @@ class S_BSO_KMeans
     return MathSqrt (distance);
   }
 
-  void KMeans (S_BSO_Agent &data [], int dataSizeClust, S_Clusters &clust [])
+  void KMeans (S_BSO_Agent &data [], int dataSizeClust, S_Cluster &clust [])
   {
     bool changed   = true;
     int  nClusters = ArraySize (clust);
@@ -146,6 +192,183 @@ class S_BSO_KMeans
   }
 };
 //——————————————————————————————————————————————————————————————————————————————
+*/
+
+
+struct S_Cluster
+{
+    double centroid [];  //cluster centroid
+    double f;            //centroid fitness
+    int    count;        //number of points in the cluster
+    int    ideasList []; //list of ideas
+
+    void Init (int coords)
+    {
+      ArrayResize (centroid, coords);
+      f = -DBL_MAX;
+      ArrayResize (ideasList, 0, 100);
+    }
+};
+
+class C_BSO_KMeans
+{
+  public:
+
+  double FitnessDistance (S_BSO_Agent &data, S_Cluster &clust, double alpha)
+  {
+    double distance = VectorDistance (data.c, clust.centroid);
+    double fitness_diff = fabs (data.f - clust.f);
+    return alpha * distance + (1 - alpha) * fitness_diff;
+  }
+
+  void KMeansInit (S_BSO_Agent &data [], int dataSizeClust, S_Cluster &clust [])
+  {
+    for (int i = 0; i < ArraySize (clust); i++)
+    {
+      int ind = MathRand () % dataSizeClust;
+      ArrayCopy (clust [i].centroid, data [ind].c, 0, 0, WHOLE_ARRAY);
+      clust [i].f = data [ind].f;
+    }
+  }
+
+  void KMeansPlusPlusInit (S_BSO_Agent &data [], int dataSizeClust, S_Cluster &clust [])
+  {
+    // Choose the first centroid randomly
+    int ind = MathRand () % dataSizeClust;
+    ArrayCopy (clust [0].centroid, data [ind].c, 0, 0, WHOLE_ARRAY);
+
+    for (int i = 1; i < ArraySize (clust); i++)
+    {
+      double sum = 0;
+
+      // Compute the distance from each data point to the nearest centroid
+      for (int j = 0; j < dataSizeClust; j++)
+      {
+        double minDist = DBL_MAX;
+
+        for (int k = 0; k < i; k++)
+        {
+          double dist = VectorDistance (data [j].c, clust [k].centroid);
+
+          if (dist < minDist)
+          {
+            minDist = dist;
+          }
+        }
+
+        data [j].minDist = minDist;
+        sum += minDist;
+      }
+
+      // Choose the next centroid with a probability proportional to the distance
+      double r = MathRand () * sum;
+
+      for (int j = 0; j < dataSizeClust; j++)
+      {
+        if (r <= data [j].minDist)
+        {
+          ArrayCopy (clust [i].centroid, data [j].c, 0, 0, WHOLE_ARRAY);
+          clust [i].f = data [ind].f;
+          break;
+        }
+        r -= data [j].minDist;
+      }
+    }
+  }
+
+  double VectorDistance (double &v1 [], double &v2 [])
+  {
+    double distance = 0.0;
+    for (int i = 0; i < ArraySize (v1); i++)
+    {
+      distance += (v1 [i] - v2 [i]) * (v1 [i] - v2 [i]);
+    }
+    return MathSqrt (distance);
+  }
+
+  void KMeans (S_BSO_Agent &data [], int dataSizeClust, S_Cluster &clust [], double alpha)
+  {
+    bool changed   = true;
+    int  nClusters = ArraySize (clust);
+    int  cnt       = 0;
+
+    while (changed && cnt < 100)
+    {
+      cnt++;
+      changed = false;
+
+      // Назначение точек данных к ближайшему центроиду
+      for (int d = 0; d < dataSizeClust; d++)
+      {
+        int    closest_centroid = -1;
+        double closest_distance = DBL_MAX;
+
+        if (data [d].f != -DBL_MAX)
+        {
+          for (int cl = 0; cl < nClusters; cl++)
+          {
+            double distance = FitnessDistance (data [d], clust [cl], alpha);
+
+            if (distance < closest_distance)
+            {
+              closest_distance = distance;
+              closest_centroid = cl;
+            }
+          }
+
+          if (data [d].label != closest_centroid)
+          {
+            data [d].label = closest_centroid;
+            changed = true;
+          }
+        }
+        else
+        {
+          data [d].label = -1;
+        }
+      }
+
+      // Обновление центроидов
+      double sum_c [];
+      ArrayResize (sum_c, ArraySize (data [0].c));
+      double sum_f = 0.0;
+
+      for (int cl = 0; cl < nClusters; cl++)
+      {
+        ArrayInitialize (sum_c, 0.0);
+
+        clust [cl].count = 0;
+        ArrayResize (clust [cl].ideasList, 0);
+        sum_f = -DBL_MAX;
+
+        for (int d = 0; d < dataSizeClust; d++)
+        {
+          if (data [d].label == cl)
+          {
+            for (int k = 0; k < ArraySize (data [d].c); k++)
+            {
+              sum_c [k] += data [d].c [k];
+            }
+
+            if (data [d].f > sum_f) sum_f = data [d].f;
+
+            clust [cl].count++;
+            ArrayResize (clust [cl].ideasList, clust [cl].count);
+            clust [cl].ideasList [clust [cl].count - 1] = d;
+          }
+        }
+
+        if (clust [cl].count > 0)
+        {
+          for (int k = 0; k < ArraySize (sum_c); k++)
+          {
+            clust [cl].centroid [k] = sum_c [k] / clust [cl].count;
+          }
+        }
+      }
+    }
+  }
+};
 
 //——————————————————————————————————————————————————————————————————————————————
 class C_AO_BSO : public C_AO
@@ -219,8 +442,8 @@ class C_AO_BSO : public C_AO
   S_BSO_Agent  agent   [];
   S_BSO_Agent  parents [];
 
-  S_Clusters   clusters [];
-  S_BSO_KMeans km;
+  S_Cluster   clusters [];
+  C_BSO_KMeans km;
 
   private: //-------------------------------------------------------------------
   S_BSO_Agent  parentsTemp [];
@@ -275,16 +498,16 @@ bool C_AO_BSO::Init (const double &rangeMinP  [], //minimum search range
       выбирается индивид из одного кластера.
 
       Если Pone_center
-          выбирается центр кластера для мутации,
+          выбирается центр кластера
       иначе
-          случайный индивид из этого кластера.
+          случайный индивид из этого кластера
   Иначе
-      выбираются индивиды из двух кластеров.
+      выбираются индивиды из двух кластеров
 
       Если Ptwo_center,
-          то два центра кластера объединяются и мутируют
+          то два центра кластера объединяются
       иначе
-          случайно выбираются два индивида из каждого выбранного кластера, которые затем объединяются и мутируют.
+          случайно выбираются два индивида из каждого выбранного кластера, которые затем объединяются
 
   Мутация:
       Полученный индивид подвергается мутации с помощью гауссовой мутации
@@ -455,7 +678,7 @@ void C_AO_BSO::Moving ()
     {
       int x = (int)u.Scale (epochsNow, 1, epochs, 1, 200);
 
-      double ξ = (1.0 / (1.0 + exp (-((100 - x) / k_Mutation))));// * u.RNDprobab ();
+      double ξ = (1.0 / (1.0 + exp (-((100 - x) / k_Mutation)))); // * u.RNDprobab ();
 
       double dist = (rangeMax [c] - rangeMin [c]) * distribCoeff * ξ;
       double min = a [i].c [c] - dist; if (min < rangeMin [c]) min = rangeMin [c];
@@ -506,12 +729,15 @@ void C_AO_BSO::Revision ()
   //выполнить кластеризацию-----------------------------------------------------
   if (!revision)
   {
-    km.KMeansInit (parents, parentPopSize, clusters);
+    km.KMeansInit       (parents, parentPopSize, clusters);
+    //km.KMeansPlusPlusInit (parents, parentPopSize, clusters);
     revision = true;
   }
 
-  km.KMeansInit (parents, parentPopSize, clusters);
-  km.KMeans     (parents, parentPopSize, clusters);
+  km.KMeansInit       (parents, parentPopSize, clusters);
+  //km.KMeansPlusPlusInit (parents, parentPopSize, clusters);
+  km.KMeans             (parents, parentPopSize, clusters, 0.8);
+  //km.KMeans             (parents, parentPopSize, clusters);
 
   //Назначить лучшее решение кластера центром кластера--------------------------
   for (int cl = 0; cl < clustersNumb; cl++)

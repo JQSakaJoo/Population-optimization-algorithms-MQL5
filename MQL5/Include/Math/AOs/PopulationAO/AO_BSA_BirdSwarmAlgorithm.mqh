@@ -4,6 +4,8 @@
 //|                                          https://www.mql5.com/ru/users/joo |
 //—————————————————————————————————————————————————————————————————————————————+
 
+//Article: https://www.mql5.com/ru/articles/14491
+
 #include "#C_AO.mqh"
 
 //——————————————————————————————————————————————————————————————————————————————
@@ -29,6 +31,7 @@ class C_AO_BSA : public C_AO
   {
     ao_name = "BSA";
     ao_desc = "Bird Swarm Algorithm";
+    ao_link = "https://www.mql5.com/ru/articles/14491";
 
     popSize        = 20;  //population size
 
