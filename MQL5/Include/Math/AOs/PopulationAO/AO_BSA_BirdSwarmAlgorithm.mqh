@@ -117,7 +117,7 @@ class C_AO_BSA : public C_AO
 bool C_AO_BSA::Init (const double &rangeMinP  [], //minimum search range
                      const double &rangeMaxP  [], //maximum search range
                      const double &rangeStepP [], //step search
-                     const int     epochsP = 0)  //number of epochs
+                     const int     epochsP = 0)   //number of epochs
 {
   if (!StandardInit (rangeMinP, rangeMaxP, rangeStepP)) return false;
 

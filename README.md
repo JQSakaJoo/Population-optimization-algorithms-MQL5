@@ -4,7 +4,7 @@ A list of implemented (+) optimization algorithms, (-) not included in the repos
 +P_O_ES ((P+O) evolution strategies)               
 +SDSm (stochastic diffusion search M)               
 +ESG (evolution of social groups)               
--SIA (simulated isotropic annealing)                                       
++SIA (simulated isotropic annealing)                                       
 -DE (differential evolution)               
 +BSA (bird swarm algorithm)               
 -HS (harmony search)               
