@@ -184,14 +184,14 @@ void C_AO_BSA::Revision ()
 
   for (int i = 0; i < popSize; i++)
   {
-    if (a [i].f > fB) ind = i;
+    if (a [i].f > fB)
+    {
+      fB = a [i].f;
+      ind = i;
+    }
   }
 
-  if (ind != -1)
-  {
-    fB = a [ind].f;
-    ArrayCopy (cB, a [ind].c, 0, 0, WHOLE_ARRAY);
-  }
+  if (ind != -1) ArrayCopy (cB, a [ind].c, 0, 0, WHOLE_ARRAY);
 
   //----------------------------------------------------------------------------
   for (int i = 0; i < popSize; i++)
