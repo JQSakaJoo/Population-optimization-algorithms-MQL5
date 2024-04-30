@@ -319,7 +319,7 @@ class C_AO_TSEA : public C_AO
     popSize         = 100; //population size
 
     vClusters       = 3;   //number of vertical clusters
-    hClusters       = 10;  //number of horizontal clusters
+    hClusters       = 20;  //number of horizontal clusters
     neighbNumb      = 5;   //number of nearest neighbors
     maxAgentsInCell = 3;   //max agents in cell
 
@@ -466,39 +466,83 @@ void C_AO_TSEA::Moving ()
 
   for (int i = 0; i < popSize; i++)
   {
-    while (true)
+    if (u.RNDprobab () < 0.8)
     {
-      rnd = u.RNDprobab ();
-      rnd = (-rnd * rnd + 1.0) * vClusters;
+      while (true)
+      {
+        rnd = u.RNDprobab ();
+        rnd = (-rnd * rnd + 1.0) * vClusters;
 
-      vPos = (int)rnd;
-      if (vPos > vClusters - 1) vPos = vClusters - 1;
+        vPos = (int)rnd;
+        if (vPos > vClusters - 1) vPos = vClusters - 1;
 
-      hPos = u.RNDminusOne (hClusters);
+        hPos = u.RNDminusOne (hClusters);
 
-      size = ArraySize (cell [vPos].cell [hPos].agent);
+        size = ArraySize (cell [vPos].cell [hPos].agent);
 
-      if (size > 0) break;
+        if (size > 0) break;
+      }
+
+      pos = u.RNDminusOne (size);
+
+      if (u.RNDprobab () < 0.5) pos = cell [vPos].cell [hPos].indBest;
+
+      for (int c = 0; c < coords; c++)
+      {
+        if (u.RNDprobab () < 0.6) val = cell [vPos].cell [hPos].agent [pos].c [c];
+        else                      val = cB [c];
+
+        double dist = (rangeMax [c] - rangeMin [c]) * 0.1;
+        min = val - dist; if (min < rangeMin [c]) min = rangeMin [c];
+        max = val + dist; if (max > rangeMax [c]) max = rangeMax [c];
+
+        val = u.PowerDistribution (val, min, max, 30);
+
+        a [i].c [c] = u.SeInDiSp  (val, rangeMin [c], rangeMax [c], rangeStep [c]);
+
+        agent [i].c [c] = a [i].c [c];
+      }
     }
-
-    pos = u.RNDminusOne (size);
-
-    if (u.RNDprobab () < 0.5) pos = cell [vPos].cell [hPos].indBest;
-
-    for (int c = 0; c < coords; c++)
+    else
     {
-      if (u.RNDprobab () < 0.6) val = cell [vPos].cell [hPos].agent [pos].c [c];
-      else                      val = cB [c];
+      int size2 = 0;
+      int hPos2 = 0;
+      int pos2  = 0;
 
-      double dist = (rangeMax [c] - rangeMin [c]) * 0.1;
-      min = val - dist; if (min < rangeMin [c]) min = rangeMin [c];
-      max = val + dist; if (max > rangeMax [c]) max = rangeMax [c];
+      while (true)
+      {
+        rnd = u.RNDprobab ();
+        rnd = (-rnd * rnd + 1.0) * vClusters;
 
-      val = u.PowerDistribution (val, min, max, 30);
+        vPos = (int)rnd;
+        if (vPos > vClusters - 1) vPos = vClusters - 1;
 
-      a [i].c [c] = u.SeInDiSp  (val, rangeMin [c], rangeMax [c], rangeStep [c]);
+        hPos = u.RNDminusOne (hClusters);
 
-      agent [i].c [c] = a [i].c [c];
+        size = ArraySize (cell [vPos].cell [hPos].agent);
+
+
+
+
+        hPos2 = u.RNDminusOne (hClusters);
+
+        size2 = ArraySize (cell [vPos].cell [hPos2].agent);
+
+        if (size > 0 && size2 > 0) break;
+      }
+
+      pos  = u.RNDminusOne (size);
+      pos2 = u.RNDminusOne (size2);
+
+      for (int c = 0; c < coords; c++)
+      {
+        val = (cell [vPos].cell [hPos ].agent [pos ].c [c] +
+               cell [vPos].cell [hPos2].agent [pos2].c [c]) * 0.5;
+
+        a [i].c [c] = u.SeInDiSp  (val, rangeMin [c], rangeMax [c], rangeStep [c]);
+
+        agent [i].c [c] = a [i].c [c];
+      }
     }
   }
 }
@@ -571,7 +615,7 @@ void C_AO_TSEA::Revision ()
     {
       agent [i].label = km.KNN (data, agent [i], neighbNumb, hClusters);
     }
-    
+
     if (epochsNow % 50 == 0)
     {
       //km.KMeansPlusPlusInit (data, ArraySize (data), clusters);
