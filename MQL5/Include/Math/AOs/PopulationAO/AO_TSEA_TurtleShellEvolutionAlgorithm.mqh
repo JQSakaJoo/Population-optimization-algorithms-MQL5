@@ -527,7 +527,7 @@ void C_AO_TSEA::Revision ()
 
   stepF = (fB - minFval) / vClusters;
 
-  //3. Разметка по вертикали дочерней популяции---------------------------------
+  //Разметка по вертикали дочерней популяции------------------------------------
   for (int i = 0; i < popSize; i++)
   {
     if (agent [i].f == fB) agent [i].labelClustV = vClusters - 1;
@@ -571,11 +571,11 @@ void C_AO_TSEA::Revision ()
     {
       agent [i].label = km.KNN (data, agent [i], neighbNumb, hClusters);
     }
-    /*
-    if (epochsNow % 5 == 0)
+    
+    if (epochsNow % 50 == 0)
     {
-      km.KMeansPlusPlusInit (data, ArraySize (data), clusters);
-      km.KMeans             (data, ArraySize (data), clusters);
+      //km.KMeansPlusPlusInit (data, ArraySize (data), clusters);
+      //km.KMeans             (data, ArraySize (data), clusters);
 
       for (int v = 0; v < vClusters; v++)
       {
@@ -603,7 +603,6 @@ void C_AO_TSEA::Revision ()
         cell [v].cell [h].agent [size - 1] = data [i];
       }
     }
-    */
   }
 
   //5, 10. Поместить популяцию в панцирь----------------------------------------
@@ -624,20 +623,30 @@ void C_AO_TSEA::Revision ()
 
       for (int c = 0; c < maxAgentsInCell; c++)
       {
-        if (agent [i].f < minF)
+        if (cell [v].cell [h].agent [c].f < minF)
         {
-          minF = agent [i].f;
+          minF = cell [v].cell [h].agent [c].f;
           posMin = c;
         }
-        if (agent [i].f > maxF)
+        if (cell [v].cell [h].agent [c].f > maxF)
         {
-          maxF = agent [i].f;
+          maxF = cell [v].cell [h].agent [c].f;
           posMax = c;
         }
       }
 
-      if (v == 0) pos = posMax;
-      else        pos = posMin;
+      if (v == 0)
+      {
+        if (agent [i].f < minF)
+        {
+          pos = posMin;
+        }
+        else
+        {
+          pos = posMax;
+        }
+      }
+      else  pos = posMin;
     }
     else
     {
