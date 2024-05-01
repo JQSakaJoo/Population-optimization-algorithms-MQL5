@@ -6,7 +6,7 @@ A list of implemented (+) optimization algorithms, (-) not included in the repos
 +ESG (evolution of social groups)               
 +SIA (simulated isotropic annealing)           
 +TSEA (turtle shell evolution algorithm)                                      
--DE (differential evolution)               
++DE (differential evolution)               
 +BSA (bird swarm algorithm)               
 -HS (harmony search)               
 -SSG (saplings sowing and growing)             

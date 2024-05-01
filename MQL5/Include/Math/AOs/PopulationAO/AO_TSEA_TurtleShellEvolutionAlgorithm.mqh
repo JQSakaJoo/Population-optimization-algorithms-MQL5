@@ -518,14 +518,9 @@ void C_AO_TSEA::Moving ()
         if (vPos > vClusters - 1) vPos = vClusters - 1;
 
         hPos = u.RNDminusOne (hClusters);
-
         size = ArraySize (cell [vPos].cell [hPos].agent);
 
-
-
-
         hPos2 = u.RNDminusOne (hClusters);
-
         size2 = ArraySize (cell [vPos].cell [hPos2].agent);
 
         if (size > 0 && size2 > 0) break;
