@@ -2,10 +2,11 @@ A list of implemented (+) optimization algorithms, (-) not included in the repos
 
 +BGA (binary genetic algorithm)               
 +P_O_ES ((P+O) evolution strategies)               
++CTA (Comet Tail Algorithm)               
 +SDSm (stochastic diffusion search M)               
 +ESG (evolution of social groups)               
 +SIA (simulated isotropic annealing)           
-+TSEA (turtle shell evolution algorithm)                                      
++TSEA (turtle shell evolution algorithm)               
 +DE (differential evolution)               
 +BSA (bird swarm algorithm)               
 -HS (harmony search)               
