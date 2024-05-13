@@ -1,6 +1,7 @@
 A list of implemented (+) optimization algorithms, (-) not included in the repository yet:  
 
 +BGA (binary genetic algorithm)               
++CLA (code lock algorithm)               
 +P_O_ES ((P+O) evolution strategies)               
 +CTA (Comet Tail Algorithm)               
 +SDSm (stochastic diffusion search M)               
