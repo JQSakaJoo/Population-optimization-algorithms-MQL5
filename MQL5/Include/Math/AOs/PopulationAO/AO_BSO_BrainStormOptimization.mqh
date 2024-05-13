@@ -18,7 +18,7 @@ struct S_BSO_Agent
 
     void Init (int coords)
     {
-      ArrayResize (c,     coords);
+      ArrayResize     (c, coords);
       f     = -DBL_MAX;
       label = -1;
       minDist = DBL_MAX;
@@ -534,6 +534,15 @@ void C_AO_BSO::Moving ()
         a [i].c [c] = u.SeInDiSp  (a [i].c [c], rangeMin [c], rangeMax [c], rangeStep [c]);
 
         agent [i].c [c] = a [i].c [c];
+      }
+    }
+
+    for (int i = 0; i < parentPopSize + popSize; i++)
+    {
+      for (int c = 0; c < coords; c++)
+      {
+        parents [i].c [c] = u.RNDfromCI (rangeMin [c], rangeMax [c]);
+        parents [i].c [c] = u.SeInDiSp  (parents [i].c [c], rangeMin [c], rangeMax [c], rangeStep [c]);
       }
     }
 
