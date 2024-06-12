@@ -9,7 +9,7 @@ A list of implemented (+) optimization algorithms, (-) not included in the repos
 +SIA (simulated isotropic annealing)  
 +ACS (artificial cooperative search)               
 +TSEA (turtle shell evolution algorithm)               
-+DE (differential evolution)
++DE (differential evolution)               
 +CRO (chemical reaction optimisation)               
 +BSA (bird swarm algorithm)               
 -HS (harmony search)               
