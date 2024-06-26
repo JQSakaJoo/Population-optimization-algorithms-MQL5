@@ -1,6 +1,7 @@
 A list of implemented optimization algorithms: 
 
 BGA (binary genetic algorithm)               
+ANS (across neighbourhood search)               
 CLA (code lock algorithm)               
 P_O_ES ((P+O) evolution strategies)               
 CTA (Comet Tail Algorithm)               
