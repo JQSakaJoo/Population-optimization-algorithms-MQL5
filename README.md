@@ -1,6 +1,5 @@
 A list of implemented optimization algorithms: 
 
-BGA (binary genetic algorithm)               
 ANS (across neighbourhood search)               
 CLA (code lock algorithm)               
 P_O_ES ((P+O) evolution strategies)               
@@ -16,7 +15,9 @@ BSA (bird swarm algorithm)
 (PO)ES ((PO) evolution strategies)               
 BSO (brain storm optimization)               
 WOAm (wale optimization algorithm M)  
-AEFA (artificial electric field algorithm)               
+AEFA (artificial electric field algorithm)       
+ASBO (adaptive social behavior optimization)        
 COAm (cuckoo optimization algorithm M)               
 Boids (boids algorithm)               
-GWO (grey wolf optimizer)               
+GWO (grey wolf optimizer)   
+BGA (binary genetic algorithm)                           
