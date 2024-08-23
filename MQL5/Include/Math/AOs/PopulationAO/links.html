@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithms with 10 Bouncing Balls</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .ball {
+            position: fixed;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <h1>Algorithm Information</h1>
+    <table>
+        <tr>
+            <th>Abbreviation</th>
+            <th>Full Name</th>
+        </tr>
+        <tr><td>ANS</td><td><a href="https://www.mql5.com/ru/articles/15049" target="_blank">across neighbourhood search</a></td></tr>
+        <tr><td>CLA</td><td><a href="https://www.mql5.com/ru/articles/14878" target="_blank">code lock algorithm</a></td></tr>
+        <tr><td>AMOm</td><td><a href="https://www.mql5.com/ru/articles/15543" target="_blank">animal migration optimization M</a></td></tr>
+        <tr><td>(P+O)ES</td><td><a href="https://www.mql5.com/ru/articles/13923" target="_blank">(P+O) evolution strategies</a></td></tr>
+        <tr><td>CTA</td><td><a href="https://www.mql5.com/ru/articles/14841" target="_blank">comet tail algorithm</a></td></tr>
+        <tr><td>SDSm</td><td><a href="https://www.mql5.com/ru/articles/13540" target="_blank">stochastic diffusion search M</a></td></tr>
+        <tr><td>ESG</td><td><a href="https://www.mql5.com/ru/articles/14136" target="_blank">evolution of social groups</a></td></tr>
+        <tr><td>SIA</td><td><a href="https://www.mql5.com/ru/articles/13870" target="_blank">simulated isotropic annealing</a></td></tr>
+        <tr><td>ACS</td><td><a href="https://www.mql5.com/ru/articles/15004" target="_blank">artificial cooperative search</a></td></tr>
+        <tr><td>ASO</td><td><a href="https://www.mql5.com/ru/articles/15511" target="_blank">anarchy society optimization</a></td></tr>
+        <tr><td>TSEA</td><td><a href="https://www.mql5.com/ru/articles/14789" target="_blank">turtle shell evolution algorithm</a></td></tr>
+        <tr><td>DE</td><td><a href="https://www.mql5.com/ru/articles/13781" target="_blank">differential evolution</a></td></tr>
+        <tr><td>CRO</td><td><a href="https://www.mql5.com/ru/articles/15080" target="_blank">chemical reaction optimisation</a></td></tr>
+        <tr><td>BSA</td><td><a href="https://www.mql5.com/ru/articles/14491" target="_blank">bird swarm algorithm</a></td></tr>
+        <tr><td>HS</td><td><a href="https://www.mql5.com/ru/articles/12163" target="_blank">harmony search</a></td></tr>
+        <tr><td>SSG</td><td><a href="https://www.mql5.com/ru/articles/12268" target="_blank">saplings sowing and growing</a></td></tr>
+        <tr><td>(PO)ES</td><td><a href="https://www.mql5.com/ru/articles/13923" target="_blank">(PO) evolution strategies</a></td></tr>
+        <tr><td>TSm</td><td><a href="https://www.mql5.com/ru/articles/15654" target="_blank">tabu search M</a></td></tr>
+        <tr><td>BSO</td><td><a href="https://www.mql5.com/ru/articles/14707" target="_blank">brain storm optimization</a></td></tr>
+        <tr><td>WOAm</td><td><a href="https://www.mql5.com/ru/articles/14414" target="_blank">wale optimization algorithm M</a></td></tr>
+        <tr><td>AEFA</td><td><a href="https://www.mql5.com/ru/articles/15162" target="_blank">artificial electric field algorithm</a></td></tr>
+        <tr><td>ACOm</td><td><a href="https://www.mql5.com/ru/articles/11602" target="_blank">ant colony optimization M</a></td></tr>
+        <tr><td>BFO-GA</td><td><a href="https://www.mql5.com/ru/articles/14011" target="_blank">bacterial foraging optimization - genetic algorithm</a></td></tr>
+        <tr><td>ABHA</td><td><a href="https://www.mql5.com/ru/articles/15347" target="_blank">artificial bee hive algorithm</a></td></tr>
+        <tr><td>ASBO</td><td><a href="https://www.mql5.com/ru/articles/15347" target="_blank">adaptive social behavior optimization</a></td></tr>
+        <tr><td>MEC</td><td><a href="https://www.mql5.com/ru/articles/13432" target="_blank">mind evolutionary computation</a></td></tr>
+        <tr><td>IWO</td><td><a href="https://www.mql5.com/ru/articles/11990" target="_blank">invasive weed optimization</a></td></tr>
+        <tr><td>Micro-AIS</td><td><a href="https://www.mql5.com/ru/articles/13951" target="_blank">micro artificial immune system</a></td></tr>
+        <tr><td>COAm</td><td><a href="https://www.mql5.com/ru/articles/11786" target="_blank">cuckoo optimization algorithm M</a></td></tr>
+        <tr><td>SDOm</td><td><a href="https://www.mql5.com/ru/articles/12252" target="_blank">spiral dynamics optimization M</a></td></tr>
+        <tr><td>NMm</td><td><a href="https://www.mql5.com/ru/articles/13805" target="_blank">Nelder-Mead method M</a></td></tr>
+        <tr><td>FAm</td><td><a href="https://www.mql5.com/ru/articles/11873" target="_blank">firefly algorithm M</a></td></tr>
+        <tr><td>GSA</td><td><a href="https://www.mql5.com/ru/articles/12072" target="_blank">gravitational search algorithm</a></td></tr>
+        <tr><td>BFO</td><td><a href="https://www.mql5.com/ru/articles/12031" target="_blank">bacterial foraging optimization</a></td></tr>
+        <tr><td>ABC</td><td><a href="https://www.mql5.com/ru/articles/11736" target="_blank">artificial bee colony</a></td></tr>
+        <tr><td>BA</td><td><a href="https://www.mql5.com/ru/articles/11915" target="_blank">bat algorithm</a></td></tr>
+        <tr><td>AAA</td><td><a href="https://www.mql5.com/ru/articles/15565" target="_blank">algae adaptive algorithm</a></td></tr>
+        <tr><td>SA</td><td><a href="https://www.mql5.com/ru/articles/13851" target="_blank">simulated annealing</a></td></tr>
+        <tr><td>IWDm</td><td><a href="https://www.mql5.com/ru/articles/13730" target="_blank">intelligent water drops M</a></td></tr>
+        <tr><td>PSO</td><td><a href="https://www.mql5.com/ru/articles/11386" target="_blank">particle swarm optimisation</a></td></tr>
+        <tr><td>Boids</td><td><a href="https://www.mql5.com/ru/articles/14576" target="_blank">boids algorithm</a></td></tr>
+        <tr><td>MA</td><td><a href="https://www.mql5.com/ru/articles/12212" target="_blank">monkey algorithm</a></td></tr>
+        <tr><td>SFL</td><td><a href="https://www.mql5.com/ru/articles/13366" target="_blank">shuffled frog-leaping</a></td></tr>
+        <tr><td>FSS</td><td><a href="https://www.mql5.com/ru/articles/11841" target="_blank">fish school search</a></td></tr>
+        <tr><td>RND</td><td><a href="https://www.mql5.com/ru/articles/8122" target="_blank">random</a></td></tr>
+        <tr><td>GWO</td><td><a href="https://www.mql5.com/ru/articles/11785" target="_blank">grey wolf optimizer</a></td></tr>
+        <tr><td>CSS</td><td><a href="https://www.mql5.com/ru/articles/13662" target="_blank">charged system search</a></td></tr>
+        <tr><td>EM</td><td><a href="https://www.mql5.com/ru/articles/12352" target="_blank">electroMagnetism-like algorithm</a></td></tr>
+    </table>
+
+    <script>
+        function createBall(size, color1, color2, speed) {
+            const ball = document.createElement('div');
+            ball.className = 'ball';
+            ball.style.width = size + 'px';
+            ball.style.height = size + 'px';
+            ball.style.background = `radial-gradient(circle at 30% 30%, ${color1}, ${color2})`;
+            document.body.appendChild(ball);
+
+            let x = Math.random() * (window.innerWidth - size);
+            let y = Math.random() * (window.innerHeight - size);
+            let dx = (Math.random() > 0.5 ? 1 : -1) * speed;
+            let dy = (Math.random() > 0.5 ? 1 : -1) * speed;
+
+            function moveBall() {
+                const maxX = window.innerWidth - size;
+                const maxY = window.innerHeight - size;
+
+                x += dx;
+                y += dy;
+
+                if (x < 0 || x > maxX) {
+                    dx = -dx;
+                    x = Math.max(0, Math.min(x, maxX));
+                }
+                if (y < 0 || y > maxY) {
+                    dy = -dy;
+                    y = Math.max(0, Math.min(y, maxY));
+                }
+
+                ball.style.left = x + 'px';
+                ball.style.top = y + 'px';
+
+                requestAnimationFrame(moveBall);
+            }
+
+            moveBall();
+        }
+
+        // Создаем 10 шариков с разными параметрами
+        createBall(20, '#ff0000', '#ff9900', 2);
+        createBall(30, '#33ff00', '#0099ff', 3);
+        createBall(40, '#ff00ff', '#6633ff', 1.5);
+        createBall(25, '#ffff00', '#ff6600', 2.5);
+        createBall(35, '#00ffff', '#0000ff', 1.8);
+        createBall(45, '#ff99cc', '#ff3366', 1.2);
+        createBall(22, '#99ff99', '#006600', 2.8);
+        createBall(38, '#ffcc00', '#cc6600', 1.6);
+        createBall(28, '#cc99ff', '#6600cc', 2.2);
+        createBall(33, '#ff6666', '#ff99cc', 2.4);
+        createBall(35, '#ff0000', '#990000', 2.6);
+        createBall(37, '#ffff00', '#0000ff', 2.8);
+        createBall(39, '#ff6666', '#6633ff', 3.2);
+        createBall(41, '#ff6600', '#0099ff', 3.6);
+    </script>
+</body>
+</html>
