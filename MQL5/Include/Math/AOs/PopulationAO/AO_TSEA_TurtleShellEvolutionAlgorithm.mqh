@@ -313,7 +313,7 @@ class C_AO_TSEA : public C_AO
   C_AO_TSEA ()
   {
     ao_name = "TSEA";
-    ao_desc = "Turtle Shell Evolution Algorithm";
+    ao_desc = "Turtle Shell Evolution Algorithm (joo)";
     ao_link = "https://www.mql5.com/ru/articles/14789";
 
     popSize         = 100; //population size

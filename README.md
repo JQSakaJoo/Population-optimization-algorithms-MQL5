@@ -1,18 +1,18 @@
 https://t.me/+vazsAAcney4zYmZi                           
-A list of implemented optimization algorithms: 
+A list of implemented optimization algorithms (M - is a modified improved version, joo - is an algorithm of my development): 
 
 ANS (across neighbourhood search)               
-CLA (code lock algorithm)               
+CLA (code lock algorithm, joo)               
 AMOm (animal migration optimization M)                      
 P_O_ES ((P+O) evolution strategies)               
-CTA (Comet Tail Algorithm)               
+CTA (Comet Tail Algorithm, joo)               
 SDSm (stochastic diffusion search M)               
 AAm (archery algorithm M)                     
-ESG (evolution of social groups)               
-SIA (simulated isotropic annealing)  
+ESG (evolution of social groups, joo)               
+SIA (simulated isotropic annealing, joo)  
 ACS (artificial cooperative search)               
 ASO (anarchy society optimization)                      
-TSEA (turtle shell evolution algorithm)               
+TSEA (turtle shell evolution algorithm, joo)               
 DE (differential evolution)               
 CRO (chemical reaction optimisation)               
 BSA (bird swarm algorithm)                                        
