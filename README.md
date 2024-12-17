@@ -1,4 +1,5 @@
-https://t.me/+vazsAAcney4zYmZi                           
+A [group](https://t.me/+vazsAAcney4zYmZi) for communication on the topic of optimization.                           
+
 A list of implemented optimization algorithms (M - is a modified improved version, joo - is an algorithm of my development): 
 
 ANS (across neighbourhood search)               
