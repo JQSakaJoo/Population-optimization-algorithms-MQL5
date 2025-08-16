@@ -247,7 +247,8 @@ class C_TSEA_clusters
       {
         if (arr [j].distance > arr [j + 1].distance)
         {
-          DistanceIndex temp = arr [j];
+          DistanceIndex temp;
+          temp = arr [j];
           arr [j] = arr [j + 1];
           arr [j + 1] = temp;
         }
