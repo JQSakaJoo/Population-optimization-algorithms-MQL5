@@ -2,6 +2,7 @@ A [group](https://t.me/+vazsAAcney4zYmZi) for communication on the topic of opti
 
 A list of implemented optimization algorithms (M - is a modified improved version, joo - is an algorithm of my development): 
 
+DOA_Dingo (dingo optimization algorithm)                       
 ANS (across neighbourhood search)               
 CLA (code lock algorithm, joo)               
 AMOm (animal migration optimization M)                      
