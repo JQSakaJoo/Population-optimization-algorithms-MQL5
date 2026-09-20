@@ -20,6 +20,7 @@
 #include "AO_AAm_ArcheryAlgorithm.mqh"
 #include "AO_ESG_Evolution_of_Social_Groups.mqh"
 #include "AO_SIA_SimulatedIsotropicAnnealing.mqh"
+#include "AO_OOAm_OspreyOptimizationAlgorithm.mqh"
 #include "AO_CCEm_CityCouncilsEvolution.mqh"
 #include "AO_ACA_AndeanCondorAlgorithm.mqh"
 #include "AO_EOm_ExtremalOptimization.mqh"
@@ -158,6 +159,7 @@ enum E_AO
   AO_AAm,        //AAm      (Archery Algorithm, M)
   AO_ESG,        //ESG      (Evolution of Social Groups, joo)
   AO_SIA,        //SIA      (Simulated Isotropic Annealing, joo)
+  AO_OOAm,       //OOAm     (Osprey Optimization Algorithm M)  
   AO_CCEm,       //CCEm     (City Councils Evolution M)
   AO_ACA,        //ACA      (Andean Condor Algorithm)
   AO_EOm,        //EOm      (Extremal Optimization M)
@@ -297,6 +299,7 @@ C_AO *SelectAO (E_AO a)
     case  AO_AAm    : ao = new C_AO_AAm    (); return (GetPointer (ao));
     case  AO_ESG    : ao = new C_AO_ESG    (); return (GetPointer (ao));
     case  AO_SIA    : ao = new C_AO_SIA    (); return (GetPointer (ao));
+    case  AO_OOAm   : ao = new C_AO_OOAm   (); return (GetPointer (ao));
     case  AO_CCEm   : ao = new C_AO_CCEm   (); return (GetPointer (ao));
     case  AO_ACA    : ao = new C_AO_ACA    (); return (GetPointer (ao));
     case  AO_EOm    : ao = new C_AO_EOm    (); return (GetPointer (ao));
