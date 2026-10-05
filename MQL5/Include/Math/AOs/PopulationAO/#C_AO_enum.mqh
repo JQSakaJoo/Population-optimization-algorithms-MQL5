@@ -60,6 +60,7 @@
 #include "AO_AEO_ArtificialEcosystemBasedOptimization.mqh"
 #include "AO_CAm_CamelAlgorithm.mqh"
 //ACOm
+#include "AO_FPA_FlowerPollinationAlgorithm.mqh"
 #include "AO_CMAES_CovarianceMatrixAdaptationEvolutionStrategy.mqh"
 #include "AO_DA_DuelistAlgorithm.mqh"
 #include "AO_ECOi_EcoInspiredEvolutionaryAlgorithm.mqh"
@@ -200,6 +201,7 @@ enum E_AO
   AO_AEO,        //AEO      (Artificial Ecosystem Based Optimization)
   AO_CAm,        //CAm      (Camel Algorithm, M)
   //ACOm
+  AO_FPA,        //FPA      (Flower Pollination Algorithm)
   AO_CMAES,      //CMAES    (Covariance Matrix Adaptation Evolution Strategy)
   AO_DA_Duelist, //DA       (Duelist Algorithm)
   AO_ECOi,       //ECOi     (Eco-inspired Evolutionary Algorithm)
@@ -341,6 +343,7 @@ C_AO *SelectAO (E_AO a)
     case  AO_AEO    : ao = new C_AO_AEO    (); return (GetPointer (ao));
     case  AO_CAm    : ao = new C_AO_CAm    (); return (GetPointer (ao));
     //ACOm
+    case  AO_FPA    : ao = new C_AO_FPA    (); return (GetPointer (ao));
     case  AO_CMAES  : ao = new C_AO_CMAES  (); return (GetPointer (ao));
     case  AO_DA_Duelist : ao = new C_AO_DA_duelist (); return (GetPointer (ao));
     case  AO_ECOi   : ao = new C_AO_ECOi   (); return (GetPointer (ao));
