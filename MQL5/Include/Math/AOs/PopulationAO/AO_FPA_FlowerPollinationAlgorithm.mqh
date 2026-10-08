@@ -6,6 +6,11 @@
 
 #include "#C_AO.mqh"
 
+
+//#define FPA_BETA  1.5
+//--- sigma_u = (G(1+b)*sin(pi*b/2) / (G((1+b)/2)*b*2^((b-1)/2)))^(1/b), b = 1.5
+//#define FPA_SIGMA 0.6965745025576968
+
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
@@ -124,12 +129,14 @@ double C_AO_FPA::Gauss()
 double C_AO_FPA::Levy()
   {
    double uu = Gauss() * 0.6965745025576968;
+   //double uu = Gauss() * FPA_SIGMA;
    double v;
    do
       v = Gauss();
    while(v == 0.0);
 
    return uu / pow(fabs(v), 1.0 / 1.5);
+   //return uu / pow(fabs(v), 1.0 / FPA_BETA);
   }
 //+------------------------------------------------------------------+
 
@@ -205,7 +212,12 @@ void C_AO_FPA::Revision()
 //--- сохранить лучшее решение
    for(int i = 0; i < popSize; i++)
      {
-      if(a [i].f > fB)
+      if(a [i].f >= a [i].fB)
+        {
+         a [i].fB = a [i].f;
+         ArrayCopy(a [i].cB, a [i].c, 0, 0, coords);
+        }
+      if(a [i].f >= fB)
         {
          fB = a [i].f;
          ArrayCopy(cB, a [i].c, 0, 0, coords);
