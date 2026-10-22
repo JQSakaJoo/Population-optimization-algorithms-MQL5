@@ -49,6 +49,7 @@
 #include "AO_HS_HarmonySearch.mqh"
 //SSG
 #include "AO_BCOm_BacterialChemotaxisOptimization.mqh"
+#include "AO_FOX_FoxInspiredOptimizationAlgorithm.mqh"
 #include "AO_ABO_AfricanBuffaloOptimization.mqh"
 #include "AO_(PO)ES_Evolution_Strategies.mqh"
 #include "AO_FBA_FractalBasedAlgorithm.mqh"
@@ -190,6 +191,7 @@ enum E_AO
   AO_HS,         //HS       (Harmony Search)
   //SSG
   AO_BCOm,       //BCOm     (Bacterial Chemotaxis Optimization, M)
+  AO_FOX,        //FOX      (Fox-inspired Optimization Algorithm)
   AO_ABO,        //ABO      (African Buffalo Optimization)
   AO_PO_ES,      //(PO)ES   (Evolution_Strategies)
   AO_FBA,        //FBA      (Fractal Based Algorithm)
@@ -332,6 +334,7 @@ C_AO *SelectAO (E_AO a)
     case  AO_HS     : ao = new C_AO_HS     (); return (GetPointer (ao));
     //SSG
     case  AO_BCOm   : ao = new C_AO_BCOm   (); return (GetPointer (ao));
+    case  AO_FOX    : ao = new C_AO_FOX    (); return (GetPointer (ao));
     case  AO_ABO    : ao = new C_AO_ABO    (); return (GetPointer (ao));
     case  AO_PO_ES  : ao = new C_AO_PO_ES  (); return (GetPointer (ao));
     case  AO_FBA    : ao = new C_AO_FBA    (); return (GetPointer (ao));
