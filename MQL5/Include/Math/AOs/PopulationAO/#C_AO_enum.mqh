@@ -87,6 +87,7 @@
 #include "AO_CROm_CoralReefsOptimization.mqh"
 #include "AO_dDCA_DeterministicDendriticCellAlgorithm.mqh"
 #include "AO_COBRA_CoOperationOfBiologyRelatedAlgorithms.mqh"
+#include "AO_GP_GeneticProgramming.mqh"
 #include "AO_CFO_CentralForceOptimization.mqh"
 #include "AO_ASHA_ArtificialShoweringAlgorithm.mqh"
 #include "AO_ASBO_AdaptiveSocialBehaviorOptimization.mqh"
@@ -229,6 +230,7 @@ enum E_AO
   AO_CROm_coral, //CROm     (Coral Reefs Optimization, M)
   AO_dDCA,       //dDCA     (Deterministic Dendritic Cell Algorithm)
   AO_COBRA,      //COBRA    (Co-Operation of Biology Related Algorithms)
+  AO_GP,         //GP       (Genetic Programming)
   AO_CFO,        //CFO      (Central Force Optimization)
   AO_ASHA,       //ASHA     (Artificial Showering Algorithm)
   AO_ASBO,       //ASBO     (Adaptive Social Behavior Optimization)
@@ -372,6 +374,7 @@ C_AO *SelectAO (E_AO a)
     case  AO_CROm_coral: ao = new C_AO_CROm (); return(GetPointer (ao));
     case  AO_dDCA   : ao = new C_AO_dDCA   (); return (GetPointer (ao));
     case  AO_COBRA  : ao = new C_AO_COBRA  (); return (GetPointer (ao));
+    case  AO_GP     : ao = new C_AO_GP     (); return (GetPointer (ao));
     case  AO_CFO    : ao = new C_AO_CFO    (); return (GetPointer (ao));
     case  AO_ASHA   : ao = new C_AO_ASHA   (); return (GetPointer (ao));
     case  AO_ASBO   : ao = new C_AO_ASBO   (); return (GetPointer (ao));
