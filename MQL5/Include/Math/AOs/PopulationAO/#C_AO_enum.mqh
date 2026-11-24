@@ -31,6 +31,7 @@
 #include "AO_DA_DialecticalAlgorithm.mqh"
 #include "AO_BHAm_BlackHoleAlgorithm.mqh"
 #include "AO_ASO_AnarchicSocietyOptimization.mqh"
+#include "AO_BESm_BaldEagleSearch.mqh"
 #include "AO_RFO_RoyalFlushOptimization.mqh"
 #include "AO_AOSm_AtomicOrbitalSearch.mqh"
 #include "AO_TSEA_TurtleShellEvolutionAlgorithm.mqh"
@@ -175,6 +176,7 @@ enum E_AO
   AO_DA,         //DA       (Dialectical Algorithm)
   AO_BHAm,       //BHAm     (Black Hole Algorithm, M)
   AO_ASO,        //ASO      (Anarchic Society Optimization)
+  AO_BESm,       //BESm     (Bald Eagle Search)
   AO_RFO,        //RFO      (Royal Flush Optimization)
   AO_AOSm,       //AOSm     (Atomic Orbital Search, M)
   AO_TSEA,       //TSEA     (Turtle Shell Evolution Algorithm, joo)
@@ -320,6 +322,7 @@ C_AO *SelectAO (E_AO a)
     case  AO_DA     : ao = new C_AO_DA     (); return (GetPointer (ao));
     case  AO_BHAm   : ao = new C_AO_BHAm   (); return (GetPointer (ao));
     case  AO_ASO    : ao = new C_AO_ASO    (); return (GetPointer (ao));
+    case  AO_BESm   : ao = new C_AO_BESm   (); return (GetPointer (ao));
     case  AO_RFO    : ao = new C_AO_RFO    (); return (GetPointer (ao));
     case  AO_AOSm   : ao = new C_AO_AOSm   (); return (GetPointer (ao));
     case  AO_TSEA   : ao = new C_AO_TSEA   (); return (GetPointer (ao));
